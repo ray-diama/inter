@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="Inter" package="rhd.game.inter" version="0.0.1" company="Indie Game" />
+	<app main="Main" path="Build" file="Inter" />
+	
+	<source path="Source" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="actuate"/>
+
+	<assets path="Assets" rename="assets" />
+	
+</project>
