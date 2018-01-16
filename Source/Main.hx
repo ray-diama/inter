@@ -50,7 +50,7 @@ class Main extends Sprite {
 		m.addLastCarte();
 		//trigger start
 		for(j in js)j.mainToString();
-		dis
+		//dis
 	}
 
 	function pickUpCards(e:GameEvents){
