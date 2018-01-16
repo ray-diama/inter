@@ -3,13 +3,15 @@
 ## Events in OpenFL - recap
 OpenFL follows the DOM event specifications, in OpenFL words it is the Display list
 For handling events in OpenFL, there's two key principles to remember:
-    + Only the event dispatcher object can listen to the event as it is the target
-        + in case the event dispatcher is a display object, its parent throughout the display list can also listen
+
+* Only the event dispatcher object can listen to the event as it is the target
+* in case the event dispatcher is a display object, its parent throughout the display list can also listen
     + events have three phases: capture, target and bubbling
         + Capture and bubbling phase can be listened by the parents throughout the display list
             + Capture happens before target phase
             + bubbling happens after target phase
         + target is only listened by the target
+        
 ### Custom Events
 Small example of how to create a custom Event
 
