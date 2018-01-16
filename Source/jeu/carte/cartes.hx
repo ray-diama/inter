@@ -13,6 +13,19 @@ import openfl.events.MouseEvent;
 
 import openfl.geom.Rectangle;
 
+/** Carte
+	decendante de la super classe @Sprite, la classe defini l'object carte qui sera utiliser pour le jeu
+	les cartes ont les proprietes:
+	@Width la largeur de la carte en type Int
+	@Height la hauteur de la carte en type Int
+	@color la couleur de la carte defini par l'enum @Color
+	@type le type de carte defini par l'enum @TypeOfCards
+	@value la valeur de la carte en type Int allant de 1 a 13, AS==1, Jack==11, Queen==12, King==13, Joker==-1
+	@face l'image de face
+	@dos l'image de dos
+	@rec le rectangle en type Rectangle limitant la zone de deplacement de la carte
+	@pos
+**/
 class Carte extends Sprite{
 	private var Width:Int;
 	private var Height:Int;
@@ -33,7 +46,7 @@ class Carte extends Sprite{
 			valeur + ".png" ), PixelSnapping.AUTO, true);
 		face.width = 55;
 		face.height = 81;
-		dos = new Bitmap( Assets.getBitmapData("assets/dos.png"), PixelSnapping.AUTO, true);
+		dos = new Bitmap( Assets.getBitmapData("assets/3x/dos.png"), PixelSnapping.AUTO, true);
 		this.color = color;
 		this.value = (color.equals(Color.Joker))? -1:valeur;
 		addChild(face);
@@ -58,6 +71,7 @@ class Carte extends Sprite{
 	}
 	function mouseDown(e:MouseEvent){
 		startDrag(false,rect);
+		this.parent.setChildIndex(this,this.parent.numChildren-1);
 		this.scaleX = this.scaleY = 1.5;
 	}
 	function mouseUp(e:MouseEvent){
@@ -108,6 +122,10 @@ class Paquet extends Sprite{
 	 	cartes.remove(x);
 	}*/
 
+	/** loadCartes
+		la fonction qui genere l'array de cartes
+		a utiliser que la premiere fois lors de l'initiation de la @pioche
+	**/
 	private function loadCartes():Array<Carte>{
 		var arr = [];
 		
@@ -121,6 +139,26 @@ class Paquet extends Sprite{
 		arr.push(new Carte(Joker,2));
 		return arr;
 	}
+	/** aleatoire
+	    la fonction qui va reclasser les cartes de maniere aleatoire
+		a la fois dans l'array de cartes et dans la display list
+	**/
+	public function aleatoire(){
+		var t:Carte = null;
+		var j:Int = 0;
+		for(i in 0...cartes.length){
+			j = entierAleatoir(0,cartes.length-1);
+			t = cartes[i];
+			cartes[i] = cartes[j];
+			cartes[j] = t;
+		}
+
+		for(i in 0...cartes.length) this.setChildIndex(cartes[i],i);
+	}
+	/** _aletoire
+		pareille que la fonction aleatoire, a la difference que les cartes
+		sont placees sous forme d'un tableau.
+	**/
 	public function _aleatoire(){
 		var t:Carte = null;
 		var j:Int = 0;
@@ -137,25 +175,8 @@ class Paquet extends Sprite{
 			cartes[i].y = cartes[i].height * Math.floor(i/13) * 0.85;	
 		}
 	}
-	public function aleatoire(){
-		var t:Carte = null;
-		var j:Int = 0;
-		for(i in 0...cartes.length){
-			j = entierAleatoir(0,cartes.length-1);
-			t = cartes[i];
-			cartes[i] = cartes[j];
-			cartes[j] = t;
-		}
-
-		for(i in 0...cartes.length) this.setChildIndex(cartes[i],i);
-	}
 	function entierAleatoir(a:Int,b:Int):Int{ return a + Math.round(( b - a ) * Math.random()); }
 	public function ToString():String{
 		return "cartes.length: "+cartes.length+"\n\tdisObj.length: "+this.numChildren;
 	}
 }
-/*
-	TODO:
-	alter the other in the array and the displayObjectContainer
-
-*/

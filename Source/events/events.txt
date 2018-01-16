@@ -1,0 +1,40 @@
+Events package hold all of the event classes related to the game
+from app launch to exit
+
+App Events
+
+Game Events
+_____________
+
+gameInitEvent
+cameraChange
+
+gameSettingChanges
+gameSettingUpdate
+
+
+    1vs1
+   ______
+   start
+   cardcheck(npc)
+   marqueur rotation
+   marquer timer
+   marquer timer extra time
+   cardPlayed
+   specialCardPlayed
+   directionChange
+   Skip
+   PickupCards
+   PickUpPunishment
+   refillPioche
+   2cardsLeft
+   End
+
+    1vsMany
+   _________
+
+    1vsMany:continuum
+   ___________________
+
+    tournament
+   ____________

@@ -1,9 +1,9 @@
 package jeu.carte;
-import openfl.display.Sprite;
+/*import openfl.display.Sprite;
 
 class Carte extends Sprite{
 	
 	function new (){
 		super();
 	}
-}
+}*/

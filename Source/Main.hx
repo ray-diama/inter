@@ -6,6 +6,7 @@ import openfl.geom.Rectangle;
 import openfl.geom.Point;
 
 using jeu.carte.cartes;
+using events.gameEvents;
 
 class Main extends Sprite {
 	
@@ -19,9 +20,10 @@ class Main extends Sprite {
 		pioche = new Element(this);
 		pioche.aleatoire();
 		mise = new Element(this,0);
-		npc:Joueur = new Joueur(this,1);
-		player:Humain = new Humain(this);
+		npc = new Joueur(this,1);
+		player = new Humain(this);
 		distribut(pioche.main.cartes,mise,[npc,player]);
+		//gameStart handler
 	}
 
 	function distribut(p:Array<Carte>,m:Element,js:Array<Joueur>, marqueur:Int=0){
@@ -48,6 +50,7 @@ class Main extends Sprite {
 		m.addLastCarte();
 		//trigger start
 		for(j in js)j.mainToString();
+		dis
 	}
 
 	function pickUpCards(e:GameEvents){
@@ -68,7 +71,8 @@ class Element{
 		tapis = new Sprite();
 		this.parent.addChild(tapis);
 		main = (position==-1)? new Paquet(1):new Paquet();
-			
+		
+		//pioche
 		if(position==-1){
 			tapis.x = 7; 
 			tapis.y = 5;
@@ -78,6 +82,7 @@ class Element{
 			target = new Point(5,5);
 			for (i in main.cartes){ i.x = target.x; i.y = target.y;}
 		}
+		//mise
 		else if(position == 0){
 			tapis.x = 322.75;
 			tapis.y = 122.5;
@@ -161,7 +166,7 @@ class Joueur extends Element{
 			while(i<main.cartes.length-1){
 				if(main.cartes[i].value == __c.value)
 					{if(choix.indexOf(i)==-1)choix.push(i);}
-				if(main.cartes[i].couleur == __c.couleur)
+				if(main.cartes[i].color == __c.color)
 					{if(choix.indexOf(i)==-1)choix.push(i);}
 				if(main.cartes[i].value == 8){
 					if(choix.indexOf(i)==-1)choix.push(i);
@@ -196,7 +201,8 @@ class Joueur extends Element{
 		if(complex){
 			//in here we will make the choice of the longest selection of cards
 			
-			break;}
+			//break;
+			}
 		else{
 			//randomingly choosing a card number
 			handCards([Math.floor(choix.length * Math.random())]);
@@ -335,6 +341,9 @@ class Humain extends Joueur{
 typedef PPoint = {
 	var x:Int;
 	var y:Int;
+}
+class Rules{
+
 }
 /*
 Main.hx:64: tapis_pioche.x = 7

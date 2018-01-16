@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="Inter" package="rhd.game.inter" version="0.0.1" company="Indie Game" />
+	<meta title="Inter" package="rhd.game.inter" version="0.0.1" company="rhetorical hounds Dev" />
 	<app main="Main" path="Build" file="Inter" />
-	
+	<window width="800" height="500" resizable="false"/>
 	<source path="Source" />
 	
 	<haxelib name="openfl" />
