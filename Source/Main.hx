@@ -7,6 +7,7 @@ import openfl.geom.Point;
 
 using jeu.carte.cartes;
 using events.gameEvents;
+using common.common;
 
 class Main extends Sprite {
 	
@@ -14,17 +15,41 @@ class Main extends Sprite {
 	var mise:Element;
 	var npc:Joueur;
 	var player:Humain;
+    var EveSys:Sprite;
+
 	public function new () {
 		
 		super ();
-		pioche = new Element(this);
+		
+		EveSys = new Sprite();addChild(EveSys);
+		pioche = new Element(EveSys);
 		pioche.aleatoire();
-		mise = new Element(this,0);
-		npc = new Joueur(this,1);
-		player = new Humain(this);
+		mise = new Element(EveSys,0);
+		npc = new Joueur(EveSys,1);
+		player = new Humain(EveSys);
 		distribut(pioche.main.cartes,mise,[npc,player]);
 		//gameStart handler
 	}
+	/** METHODS **/
+	
+	/** Init
+
+		initialisation d'EveSys
+		initialisation des events,
+		rajout des eventListener sur EveSys
+
+	**/
+	function init(){
+		//
+		//Game Init
+		//EveSys.addEventListener(GameEvents.GAME_INIT_EVENT,GameInit,true);
+		//EveSys.dispatchEvent(new GameEvent(GameEvents.GAME_INIT_EVENT));
+	}
+	/** UpDate
+		lecture des settings
+		lecturer des stats
+	**/
+	function upDate(){}
 
 	function distribut(p:Array<Carte>,m:Element,js:Array<Joueur>, marqueur:Int=0){
 		var totalCarte:Int = 4 * js.length;
@@ -52,24 +77,80 @@ class Main extends Sprite {
 		for(j in js)j.mainToString();
 		//dis
 	}
+	function punishmentTo(p:Array<Carte>,js:Array<Joueur>, marqueur:Int,direction:Int,cardNum:Int=1){
+		var max:Int = js.length;
+		var mar:Int = Common.increment(marqueur,direction,max);
+		for(i in 0...cardNum) distributTo(p,js,mar);
+		//markerRotationEvent.data=cardNum;
+		//dispatch
+		for(j in js)j.mainToString();
+		//dis
+	}
+	function distributTo(p:Array<Carte>,js:Array<Joueur>, marqueur:Int){
+		js[marqueur].main.cartes.push(p.splice(p.length-1,1)[0]);
+		js[marqueur].addLastCarte();
+		//for(j in js)j.mainToString();
+	}
 
-	function pickUpCards(e:GameEvents){
+	//Game State eventListeners
+	/** GameInit
+
+	**/
+	function GameInit(e:GameEvents){
+		//EveSys.removeEventListener(GameEvents.GAME_INIT_EVENT,GameInit,true);
+	}
+	/****/
+	function GameStart(e:GameEvents){}
+	/****/
+	function GamePause(e:GameEvents){}
+	/****/
+	function GameEnd(e:GameEvents){}
+	/****/
+	function GameReload(e:GameEvents){}
+	/****/
+	function GameOver(e:GameEvents){}
+	
+	//Ingame eventListeners
+	/****/
+	function play(e:GameEvents){}
+	/****/
+	function cardCheck(e:GameEvents){}
+	/****/
+	function cardsPlayed(e:GameEvents){}
+	/****/
+	function cardsMisplayed(e:GameEvents){}
+	/****/
+	function directionChange(e:GameEvents){}
+	/****/
+	function markerRotation(e:GameEvents){}
+	/****/
+	function markerTimer(e:GameEvents){}
+	/****/
+	function markerTimerExtraTime(e:GameEvents){}
+	/****/
+	function pickupCard(e:GameEvents){
 		var n:Int = cast e.gameData; //number of cards to pick up
 
 	}
+	/****/
+	function pickupPunishment(e:GameEvents){}
+	/****/
+	function refillPioche(e:GameEvents){}
+	/****/
+	function 2cardsLeft(e:GameEvents){}
 }
-
+	/****/
 class Element{
 	public var tapis:Sprite;//a remplacer avec un bitmap, mais pour l'instant est le conteneur des cartes
 	public var main:Paquet;
 	public var target:Point;
-	var parent:DisplayObjectContainer;
+	public var EveSys:DisplayObjectContainer;
 	
 	public function new(parent:DisplayObjectContainer, position:Int=-1){
-		this.parent = parent;
+		EveSys = parent;
 
 		tapis = new Sprite();
-		this.parent.addChild(tapis);
+		EveSys.addChild(tapis);
 		main = (position==-1)? new Paquet(1):new Paquet();
 		
 		//pioche
@@ -115,6 +196,7 @@ class Element{
 */
 class Joueur extends Element{
 	public var position:Int;/**/
+	public var jouerActif:Bool;
 	
 	/**
 		les position possible sont:
@@ -125,7 +207,7 @@ class Joueur extends Element{
 	*/
 	public function new(parent:DisplayObjectContainer, position:Int){
 		super(parent,position);
-		
+		jouerActif = true;
 		this.position = position;
 		
 		switch(position){
@@ -336,13 +418,6 @@ class Humain extends Joueur{
 		for (i in main.cartes) i.swapRect(areaPlayable);
 	}
 	public override function destroy(){}
-
-}
-typedef PPoint = {
-	var x:Int;
-	var y:Int;
-}
-class Rules{
 
 }
 /*

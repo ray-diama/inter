@@ -13,6 +13,8 @@ import openfl.events.MouseEvent;
 
 import openfl.geom.Rectangle;
 
+import common.Common;
+
 /** Carte
 	decendante de la super classe @Sprite, la classe defini l'object carte qui sera utiliser pour le jeu
 	les cartes ont les proprietes:
@@ -147,7 +149,7 @@ class Paquet extends Sprite{
 		var t:Carte = null;
 		var j:Int = 0;
 		for(i in 0...cartes.length){
-			j = entierAleatoir(0,cartes.length-1);
+			j = Common.entierAleatoir(0,cartes.length-1);
 			t = cartes[i];
 			cartes[i] = cartes[j];
 			cartes[j] = t;
@@ -163,7 +165,7 @@ class Paquet extends Sprite{
 		var t:Carte = null;
 		var j:Int = 0;
 		for(i in 0...cartes.length){
-			j = entierAleatoir(0,cartes.length-1);
+			j = Common.entierAleatoir(0,cartes.length-1);
 			t = cartes[i];
 			cartes[i] = cartes[j];
 			cartes[j] = t;
@@ -175,7 +177,7 @@ class Paquet extends Sprite{
 			cartes[i].y = cartes[i].height * Math.floor(i/13) * 0.85;	
 		}
 	}
-	function entierAleatoir(a:Int,b:Int):Int{ return a + Math.round(( b - a ) * Math.random()); }
+	//function entierAleatoir(a:Int,b:Int):Int{ return a + Math.round(( b - a ) * Math.random()); }
 	public function ToString():String{
 		return "cartes.length: "+cartes.length+"\n\tdisObj.length: "+this.numChildren;
 	}

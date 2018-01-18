@@ -1,3 +1,3 @@
 # Inter
-A small haxe deck game
-by rhD
+A small event-based haxe deck game
+by @rhD
